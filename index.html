@@ -85,8 +85,10 @@
       <section id="projects">
         <h2 style="margin:0 0 10px">Featured Projects</h2>
         <div class="cards" id="projects-grid">
-          <div class="card project" data-title="Zoho Leave Application" data-desc="Leave management application built at Zoho." data-link="#">
-            <div class="project-preview">Preview — Zoho Leave Application</div>
+          <div class="card project" data-title="Zoho Leave Application" data-desc="Leave management application built at Zoho." data-link="https://www.notion.so/Project-Brief-Leave-Application-using-Zoho-Creator-273f0a14d28880f08821e1997577c443?source=copy_link">
+            <div class="project-preview">
+              <img src="https://res.cloudinary.com/dlfwbjnzk/image/upload/v1758433811/Screenshot_2025-09-21_111948_ryxumx.png" alt="Zoho Leave Application Screenshot" style="max-width:100%;max-height:100%;border-radius:8px;">
+            </div>
             <h3>Zoho Leave Application</h3>
             <p class="muted" style="color:var(--muted);font-size:13px;margin:8px 0">Zoho • Built a leave application system</p>
             <a href="#" class="btn" onclick="openProject(event,0)">Open</a>
@@ -182,7 +184,15 @@
       tick();
     })();
 
-    function openProject(e,index){e.preventDefault(); const p = document.querySelectorAll('.project')[index]; const title = p.dataset.title; const desc = p.dataset.desc; termPrint(`Opening project: ${title}\n${desc}`);}
+    function openProject(e,index){
+      e.preventDefault();
+      const p = document.querySelectorAll('.project')[index];
+      const title = p.dataset.title;
+      const desc = p.dataset.desc;
+      const link = p.dataset.link;
+      termPrint(`Opening project: ${title}\n${desc}\nLink: ${link}`);
+      if(link) window.open(link, '_blank');
+    }
 
     const out = $('#out'); const input = $('#cmd');
     function termPrint(str){ out.innerText += str + '\n\n'; out.parentNode.scrollTop = out.parentNode.scrollHeight; }
