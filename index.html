@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio — Jahnavi Murari</title>
+  <meta name="description" content="World-class developer portfolio with interactive terminal" />
+  <style>
+    :root{
+      --bg:#071019;
+      --card:#0d1620;
+      --muted:#9aa6b2;
+      --accent1:#00ffd5;
+      --accent2:#8b5cf6;
+      --accent3:#39ff14;
+      --glass: rgba(255,255,255,0.03);
+      --glow: 0 6px 30px rgba(0,255,213,0.06);
+      --mono: 'SFMono-Regular', Menlo, Monaco, 'Courier New', monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(139,92,246,0.06), transparent 6%),
+                  radial-gradient(800px 400px at 90% 90%, rgba(0,255,213,0.03), transparent 8%),
+                  var(--bg);
+      color:#e6f0f3; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      padding:32px; display:flex; align-items:flex-start; justify-content:center;
+    }
+    .wrap{max-width:1100px; width:100%; display:grid; grid-template-columns: 1fr 420px; gap:28px; align-items:start}
+    main{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:16px; padding:28px; box-shadow:var(--glow);}
+    header.hero{display:flex; gap:20px; align-items:center}
+    .avatar{width:96px; height:96px; border-radius:12px; overflow:hidden;}
+    .avatar img{width:100%; height:100%; object-fit:cover; border-radius:12px;}
+    .hero-text h1{margin:0; font-size:26px; letter-spacing:-0.5px}
+    .hero-text p{margin:6px 0 0; color:var(--muted)}
+    .code-rain{position:absolute; inset:0; opacity:0.06; pointer-events:none}
+    section{margin-top:22px}
+    .cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015)); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.03);}
+    .card h3{margin:0 0 8px}
+    .project-preview{height:120px; border-radius:8px; background:linear-gradient(135deg, rgba(139,92,246,0.12), rgba(0,255,213,0.06)); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:13px}
+    .skill{display:flex; align-items:center; gap:12px}
+    .skill .bar{flex:1; height:10px; background:rgba(255,255,255,0.04); border-radius:999px; overflow:hidden}
+    .skill .fill{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); transition:width 1s ease}
+    aside{position:relative; height:100%;}
+    .panel{background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(255,255,255,0.02)); padding:18px; border-radius:12px; height:100%; display:flex; flex-direction:column; gap:12px; min-height:560px}
+    .terminal{background:#041018; color:var(--accent1); font-family:var(--mono); font-size:13px; padding:12px; border-radius:8px; flex:1; display:flex; flex-direction:column; overflow:auto; box-shadow: 0 8px 40px rgba(0,0,0,0.6);}
+    .terminal .output{white-space:pre-wrap; padding-bottom:6px}
+    .term-input{display:flex; gap:8px; align-items:center; padding-top:8px}
+    .prompt{min-width:42px}
+    .cmd{flex:1; background:transparent; border:none; color:inherit; outline:none; font-family:inherit}
+    .hint{color:var(--muted); font-size:12px}
+    footer{margin-top:18px; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:13px}
+    a.btn{display:inline-block; padding:8px 12px; border-radius:10px; text-decoration:none; background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#041018; font-weight:700}
+    @media (max-width:980px){.wrap{grid-template-columns:1fr; padding-bottom:40px} aside{order:-1}}
+    .imageprofile{
+        width: 30vw;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main>
+      <div style="position:relative">
+        <canvas class="code-rain" id="rain" width="1200" height="600"></canvas>
+        <header class="hero">
+          <div class="avatar" id="avatar">
+            <img src="https://res.cloudinary.com/dlfwbjnzk/image/upload/v1758111000/1735733884621_k4jxio.jpg" alt="Profile Picture" class="imageprofile">
+          </div>
+          <div class="hero-text">
+            <h1 id="hero-name">Jahnavi Murari</h1>
+            <p id="hero-tag">I craft robust websites and seamless Zoho solutions, turning ideas into fast, scalable results.</p>
+          </div>
+        </header>
+      </div>
+
+      <section id="about">
+        <div class="card">
+          <h3>About</h3>
+          <p id="about-text">I'm a passionate programmer who treats code as craftsmanship. I focus on building clean, scalable systems, delightful UX and fast front-end experiences. Replace this text with your real bio.</p>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2 style="margin:0 0 10px">Featured Projects</h2>
+        <div class="cards" id="projects-grid">
+          <div class="card project" data-title="Zoho Leave Application" data-desc="Leave management application built at Zoho." data-link="#">
+            <div class="project-preview">Preview — Zoho Leave Application</div>
+            <h3>Zoho Leave Application</h3>
+            <p class="muted" style="color:var(--muted);font-size:13px;margin:8px 0">Zoho • Built a leave application system</p>
+            <a href="#" class="btn" onclick="openProject(event,0)">Open</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2 style="margin:18px 0 10px">Skills</h2>
+        <div class="card">
+          <div style="display:flex;gap:12px;flex-direction:column">
+            <div class="skill"><div style="width:110px">JavaScript</div><div class="bar"><div class="fill" data-fill="95%"></div></div></div>
+            <div class="skill"><div style="width:110px">HTML & CSS</div><div class="bar"><div class="fill" data-fill="98%"></div></div></div>
+            <div class="skill"><div style="width:110px">Node.js</div><div class="bar"><div class="fill" data-fill="88%"></div></div></div>
+            <div class="skill"><div style="width:110px">Databases</div><div class="bar"><div class="fill" data-fill="82%"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2 style="margin:18px 0 10px">Contact</h2>
+        <div class="card">
+          <p class="muted">Want to work together? Send an email or use the terminal: <code>contact</code></p>
+          <form onsubmit="submitContact(event)">
+            <div style="display:flex;gap:8px;flex-direction:column">
+              <input name="name" placeholder="Your name" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required>
+              <input name="email" placeholder="Your email" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required>
+              <textarea name="msg" placeholder="Message" rows="4" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required></textarea>
+              <button class="btn" type="submit">Send</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <footer>
+        <div>Made By Jahnavi Murari</div>
+        <div style="display:flex;gap:10px"><a href="https://github.com/jahnavimurari" class="hint" target="_blank">GitHub</a><a href="https://www.linkedin.com/in/jahnavimurari/" class="hint" target="_blank">LinkedIn</a></div>
+      </footer>
+    </main>
+
+    <aside>
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Interactive Terminal</div>
+          <div class="hint">Type <code>help</code> to get started</div>
+        </div>
+
+        <div class="terminal" id="terminal" aria-live="polite">
+          <div class="output" id="out">Welcome to the interactive terminal. Type <code>help</code> to see commands.
+
+</div>
+        </div>
+
+        <div class="term-input">
+          <div class="prompt">&gt; </div>
+          <input id="cmd" class="cmd" placeholder="type a command (eg. projects, about)" autocomplete="off">
+          <button class="btn" id="enterBtn" onclick="runCmd()">Run</button>
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+          <div class="hint">Tip: try <code>projects</code> or <code>open project 1</code></div>
+          <div style="display:flex;gap:8px"><button class="btn" onclick="copyLink()">Copy page</button></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    (function codeRain(){
+      const canvas = document.getElementById('rain');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const cols = Math.floor(canvas.width/14);
+      const drops = Array(cols).fill(0).map(()=>Math.random()*canvas.height);
+      function tick(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = 'rgba(0,0,0,0)';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = 'rgba(0,255,213,0.12)';
+        ctx.font = '12px monospace';
+        for(let i=0;i<cols;i++){
+          const x = i*14+6;
+          const y = drops[i];
+          const ch = String.fromCharCode(33+Math.random()*94);
+          ctx.fillText(ch, x, y);
+          drops[i] = y > canvas.height ? 0 : y + 14*Math.random();
+        }
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
+    function openProject(e,index){e.preventDefault(); const p = document.querySelectorAll('.project')[index]; const title = p.dataset.title; const desc = p.dataset.desc; termPrint(`Opening project: ${title}\n${desc}`);}
+
+    const out = $('#out'); const input = $('#cmd');
+    function termPrint(str){ out.innerText += str + '\n\n'; out.parentNode.scrollTop = out.parentNode.scrollHeight; }
+
+    function runCmdFromString(cmdStr){
+      const raw = (cmdStr||'').trim(); if(!raw) return;
+      const parts = raw.split(/\s+/);
+      const cmd = parts[0].toLowerCase();
+      const args = parts.slice(1);
+
+      switch(cmd){
+        case 'help':
+          termPrint('help - show commands\nabout - short bio\nprojects - list projects\nopen - open project by number (eg. open 1)\nskills - show skills\ncontact - show contact info\nclear - clear terminal');
+          break;
+        case 'about':
+          termPrint(document.getElementById('about-text').innerText);
+          break;
+        case 'projects':{
+          const ps = Array.from(document.querySelectorAll('.project')).map((el,i)=>`${i+1}. ${el.dataset.title} — ${el.dataset.desc}`);
+          termPrint('Projects:\n' + ps.join('\n'));
+          break;
+        }
+        case 'open':{
+          const idx = parseInt(args[0]);
+          if(isNaN(idx) || idx<1 || idx>document.querySelectorAll('.project').length){ termPrint('Usage: open <project-number>'); }
+          else{ const p = document.querySelectorAll('.project')[idx-1]; termPrint('Opening — ' + p.dataset.title + '\n' + p.dataset.desc); p.scrollIntoView({behavior:'smooth', block:'center'}); }
+          break;
+        }
+        case 'skills':{
+          const s = $$('.skill').map(el=>el.innerText.trim()); termPrint('Skills:\n' + s.join('\n')); break;
+        }
+        case 'contact':
+          termPrint('Email: jahnavimurari4@gmail.com\nGitHub: https://github.com/jahnavimurari\nLinkedIn: https://www.linkedin.com/in/jahnavimurari/');
+          break;
+        case 'clear': out.innerText = ''; break;
+        default:
+          termPrint(`Command not found: ${cmd}. Type 'help' for a list of commands.`);
+      }
+    }
+
+    function runCmd(){ runCmdFromString(input.value); input.value=''; input.focus(); }
+
+    function copyLink(){
+      navigator.clipboard.writeText(window.location.href).then(()=>{alert('Link copied!')}).catch(()=>{alert('Failed to copy link')});
+    }
+
+    function submitContact(e){
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const email = form.email.value;
+      const msg = form.msg.value;
+      window.location.href = `mailto:jahnavimurari4@gmail.com?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + " (from: " + email + ")")}`;
+    }
+
+    const skillsSection = document.querySelector('#skills');
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          document.querySelectorAll('.fill').forEach(el=>{
+            el.style.width = el.dataset.fill;
+          });
+          observer.disconnect();
+        }
+      });
+    }, {threshold:0.3});
+    observer.observe(skillsSection);
+  </script>
+</body>
+</html>
